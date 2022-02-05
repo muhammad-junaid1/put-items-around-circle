@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How To Put Items Around A Circle</title>
+    <style>
+      :root {
+        /*  Set the sizes  */
+        --container-size: 300px;
+        --item-size: 40px;
+
+        /*  Translation must be half of container size  */
+        --translate: calc(var(--container-size) / 2);
+      }
+
+      .container {
+        position: relative;
+        width: var(--container-size);
+        height: var(--container-size);
+
+        /*  Make container to appear as circle  */
+        border: 2px solid black;
+        border-radius: 50%;
+      }
+      .container .item {
+        display: block;
+        width: var(--item-size);
+        height: var(--item-size);
+        background: green;
+
+        /*  Align items into center of container  */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        /*  Margin for each item should be negative half of its width  */
+        margin: calc((var(--item-size) / -2));
+
+        /* Adjust items on the container  */
+        /****  calc((360deg / var(--total-items)) * var(--i)) ****/
+        transform: rotate(calc((360deg / var(--total-items)) * var(--i)))
+          translate(var(--translate))
+          rotate(calc((360deg / var(--total-items)) * var(--i) * -1));
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+
+    <script>
+      const root = document.querySelector(":root");
+      const items = document.querySelectorAll(".container .item");
+
+      // Set the total items in the container
+      root.style.setProperty("--total-items", items.length);
+
+      // Set the index to each item of container
+      items.forEach((item, index) => {
+        item.style.setProperty("--i", index);
+      });
+    </script>
+  </body>
+</html>
